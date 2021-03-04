@@ -1,9 +1,11 @@
 package fileControler.load;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import dataClass.javaFxTreeView.TitleInfo;
+import pathControler.GetPath;
 
 public class TitleInfoLoader {
 
@@ -14,11 +16,12 @@ public class TitleInfoLoader {
    * @version 2021/01/05 1.0.0 新規作成
    * @since 1.0.0
    * @author wadamasaya
+   * @throws IOException
    */
-  public static List<TitleInfo> titleInfoLoader() {
+  public static List<TitleInfo> titleInfoLoader() throws IOException {
 
     // TODO ファイルパスはpropertieファイルで管理
-    String file_name = "src/main/resources/Files/TitleInfo.csv";
+    String file_name = GetPath.getConfigPath() + "/TitleInfo.csv";
     // ItemInfoファイルからデータを取得
     List<String[]> data = CsvLoader.csvLoader(file_name);
 

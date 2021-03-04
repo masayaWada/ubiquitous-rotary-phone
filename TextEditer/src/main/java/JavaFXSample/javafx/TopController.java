@@ -3,6 +3,7 @@ package JavaFXSample.javafx;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import converter.CharConverter;
@@ -29,6 +30,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import pathControler.GetPath;
 
 /**
  * Secondary画面のコントローラー
@@ -200,6 +202,32 @@ public class TopController {
   }
 
   /**
+   * 対象プロジェクトの設定を取得する
+   *
+   * @param projectName 取得対象プロジェクト名
+   * @return プロジェクト設定　該当プロジェクトがない場合はNULL
+   * @version 2021/01/05 1.0.0 新規作成
+   * @since 1.0.0
+   * @author wadamasaya
+   * @throws IOException
+   */
+  private ProjectProperty getProjectProperty(String projectName) throws IOException {
+    // ProjectInfoの読込
+    List<ProjectInfo> projectInfoList = ProjectInfoLoader.projectInfoLoader();
+
+    ProjectProperty projectProperty = null;
+    for (ProjectInfo projectInfo : projectInfoList) {
+      // プロジェクト名をもとに該当プロジェクトを判断
+      if (projectName.equals(projectInfo.getProjectName())) {
+        // 当プロジェクトのProjectProperty読込
+        projectProperty = FolderInfoLoader.folderInfoLoader(projectInfo.getProjectInfoPath());
+      }
+    }
+
+    return projectProperty;
+  }
+
+  /**
    * TreeViewの再読込
    * @throws IOException
    * @version 2021/01/05 1.0.0 新規作成
@@ -207,7 +235,6 @@ public class TopController {
    * @author wadamasaya
    */
   @SuppressWarnings("unchecked")
-  @FXML
   private void loadScreen() throws IOException {
 
     // ProjectNameを取得
@@ -222,56 +249,24 @@ public class TopController {
       projectNameComboBox.setValue(projectName);
     }
 
-    // ProjectInfoの読込
-    List<ProjectInfo> projectInfoList = ProjectInfoLoader.projectInfoLoader();
-
-    boolean passFlg = true;
-    for (Integer i = 0; i < projectInfoList.size(); i++) {
-      // 選択したプロジェクト名に合致するプロジェクトか判断
-      if (projectName.equals(projectInfoList.get(i).getProjectName())) {
-        // 該当プロジェクトのProjectInfoを取得
-        ProjectInfo projectInfo = projectInfoList.get(projectInfoList.indexOf(projectInfoList.get(i)));
-        // ProjectPropertyの読込
-        ProjectProperty projectProperty = FolderInfoLoader.folderInfoLoader(projectInfo.getProjectInfoPath());
-        // ProjectPropertyの保護フラグがtrueの場合、パスワード入力処理
-        if (projectProperty.getLockFlg()) {
-          // パスワードを入力する
-          TextInputDialog passDialog = new TextInputDialog("");
-          passDialog.setHeaderText("パスワードを入力してください。");
-          String inputPass = passDialog.showAndWait().get().toString();
-
-          // パスワードの正否を判断
-          passFlg = inputPass.equals(projectProperty.getContentPassword());
-        }
-      }
-    }
-
     // TreeViewにセットするTreeItemを宣言
     TreeItem<String> rootItem = null;
 
-    // パスワードが正しかった場合、プロジェクトのテキストをTreeViewに表示
-    if (passFlg) {
-      // ItemInfoの読込
-      List<ItemInfo> itemInfoList = ItemInfoLoader.itemInfoLoader();
-      // TreeItemにプロジェクト名をセット
-      rootItem = new TreeItem<>(projectName, new ImageView(GetIcon(Type.GROUP)));
-      for (ItemInfo b : itemInfoList) {
-        // 親プロジェクトがコンボボックスで選択したプロジェクトの場合追加
-        if (projectName.equals(b.getParentFolderPath())) {
-          // TreeItemにアイテムを追加していく
-          rootItem.getChildren().addAll(
-              new TreeItem<>(b.getFileName(), new ImageView(GetIcon(Type.ITEM))));
-        }
+    // ItemInfoの読込
+    List<ItemInfo> itemInfoList = ItemInfoLoader.itemInfoLoader();
+    // TreeItemにプロジェクト名をセット
+    rootItem = new TreeItem<>(projectName, new ImageView(GetIcon(Type.GROUP)));
+    for (ItemInfo b : itemInfoList) {
+      // 選択したプロジェクトに該当するファイルの判断
+      if (projectName.equals(b.getParentFolderPath())) {
+        // TreeItemにアイテムを追加していく
+        rootItem.getChildren().addAll(
+            new TreeItem<>(b.getFileName(), new ImageView(GetIcon(Type.ITEM))));
       }
-    } else {
-      // TreeItemにエラーメッセージをセット
-      rootItem = new TreeItem<>("パスワードが正しくありません。TOP画面に戻り再度プロジェクトを選択してください。");
     }
+
     // TreeViewにTreeItemをセット
     fileNameTreeView.setRoot(rootItem);
-    // 現在、編集プロジェクトを一時ファイルに保持
-    // 一時ファイルに対象のファイルパスとファイル名を保持
-    PropertiesBuilder.tmpDataBuilder(projectName);
   }
 
   /**
@@ -290,6 +285,62 @@ public class TopController {
     } else {
       // ファイルアイコンを取得
       return fileIcon;
+    }
+  }
+
+  /**
+   * プロジェクトを選択
+   * @throws IOException
+   * @version 2021/01/05 1.0.0 新規作成
+   * @since 1.0.0
+   * @author wadamasaya
+   */
+  @FXML
+  private void selectProject() throws IOException {
+    if (!"".equals(conversionProjectName())) {
+      // ProjectNameを取得
+      String projectName = conversionProjectName();
+
+      // 対象プロジェクトの設定を取得
+      ProjectProperty projectProperty = getProjectProperty(projectName);
+
+      // プロジェクトロック確認
+      boolean passFlg = true;
+      if (projectProperty.getLockFlg()) {
+        // パスワードを入力する
+        TextInputDialog passDialog = new TextInputDialog("");
+        passDialog.setHeaderText("パスワードを入力してください。");
+        String inputPass = null;
+        try {
+          inputPass = passDialog.showAndWait().get().toString();
+        } catch (NoSuchElementException e) {
+          // パスワードを入力せず、入力フォームを閉じた際はここでキャッチする
+          inputPass = "brank";
+        }
+        // パスワードの正否を判断
+        passFlg = inputPass.equals(projectProperty.getContentPassword());
+      }
+
+      // パスワードが正しかった場合、ファイル一覧をTreeViewに表示
+      // パスワードが誤っていた場合、TreeItemにエラーメッセージをセット
+      if (passFlg) {
+        // コンボボックスに値をセットする
+        projectNameComboBox.setValue(projectName);
+        // 現在、編集プロジェクトを一時ファイルに保持
+        // 一時ファイルに対象のファイルパスとファイル名を保持
+        PropertiesBuilder.tmpDataBuilder(projectName);
+        // TreeViewを更新する
+        loadScreen();
+      } else {
+        // コンボボックスの選択をクリア
+        loadProjectName();
+        // TreeViewにセットするTreeItemを宣言
+        TreeItem<String> rootItem = new TreeItem<>("パスワードが正しくありません。TOP画面に戻り再度プロジェクトを選択してください。");
+        // TreeViewにTreeItemをセット
+        fileNameTreeView.setRoot(rootItem);
+        // 一時ファイルに対象のファイルパスとファイル名を保持
+        PropertiesBuilder.tmpDataBuilder("");
+      }
     }
   }
 
@@ -313,21 +364,21 @@ public class TopController {
       List<ProjectInfo> projectInfoList = ProjectInfoLoader.projectInfoLoader();
 
       // 新規作成するプロジェクトの各種ファイル、フォルダのパスを定義
-      String nweProjectName = inputProjectName.get().toString();
+      String newProjectName = inputProjectName.get().toString();
       String folderPath = GetDate.getNowDate();
       String propertiePath = GetDate.getNowDate() + ".properties";
 
       // 新規作成するプロジェクトのProjectInfoを宣言
-      ProjectInfo projectInfo = new ProjectInfo(nweProjectName, folderPath, propertiePath);
+      ProjectInfo projectInfo = new ProjectInfo(newProjectName, folderPath, propertiePath);
       // ProjectInfoのリストに新規作成したProjectInfoを追加
       projectInfoList.add(projectInfo);
 
       // フォルダ作成を行う
-      File folder = new File("src/main/resources/Files/TextFolder/" + folderPath);
+      File folder = new File(GetPath.getConfigPath() + "/TextFolder/" + folderPath);
       folder.mkdir();
 
       // propertieファイル作成を行う
-      File propertieFile = new File("src/main/resources/Files/FolderInfo/" + propertiePath);
+      File propertieFile = new File(GetPath.getConfigPath() + "/FolderInfo/" + propertiePath);
       propertieFile.createNewFile();
 
       // ItemInfoをCSVに上書きする
@@ -349,6 +400,16 @@ public class TopController {
   private void createFile() throws IOException {
     // 現在、選択しているプロジェクト名を取得
     String projectName = conversionProjectName();
+    // ProjectInfoの読込
+    List<ProjectInfo> projectInfoList = ProjectInfoLoader.projectInfoLoader();
+
+    // 新規ファイル追加対象プロジェクトの情報を取得
+    ProjectInfo targetProjectInfo = null;
+    for (ProjectInfo projectInfo : projectInfoList) {
+      if (projectName.equals(projectInfo.getProjectName())) {
+        targetProjectInfo = projectInfo;
+      }
+    }
 
     // 新規作成するファイル名の入力
     TextInputDialog dialog = new TextInputDialog("");
@@ -362,7 +423,7 @@ public class TopController {
 
       // 新規作成するファイルのファイル名、ファイルパスを定義
       String newFileName = inputFileName.get().toString();
-      String newFilePath = projectName + "/" + GetDate.getNowDate() + ".csv";
+      String newFilePath = targetProjectInfo.getFolderPath() + "/" + GetDate.getNowDate() + ".csv";
 
       // 新規作成するプロジェクトのItemInfoを宣言
       ItemInfo itemInfo = new ItemInfo(newFileName, projectName, newFilePath);
@@ -370,7 +431,7 @@ public class TopController {
       itemInfoList.add(itemInfo);
 
       // ファイル作成を行う
-      File file = new File("src/main/resources/Files/TextFolder/" + newFilePath);
+      File file = new File(GetPath.getConfigPath() + "/TextFolder/" + newFilePath);
       file.createNewFile();
 
       // ItemInfoをCSVに上書きする
@@ -494,7 +555,7 @@ public class TopController {
           if (projectName.equals(itemInfoList.get(i).getParentFolderPath()) &&
               focusedTreeItem.getValue().equals(itemInfoList.get(i).getFileName())) {
             // ファイルを削除
-            File file = new File("src/main/resources/Files/TextFolder/" + itemInfoList.get(i).getFilePath());
+            File file = new File(GetPath.getConfigPath() + "/TextFolder/" + itemInfoList.get(i).getFilePath());
             file.delete();
             // ItemInfoから削除
             itemInfoList.remove(itemInfoList.indexOf(itemInfoList.get(i)));

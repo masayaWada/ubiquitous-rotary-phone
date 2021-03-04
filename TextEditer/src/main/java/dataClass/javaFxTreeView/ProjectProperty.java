@@ -27,9 +27,24 @@ public class ProjectProperty {
    */
   public ProjectProperty(String animeTitle, String uploadPassword, String contentPassword, Boolean hiddenFlg,
       Boolean lockFlg) {
-    this.animeTitle = animeTitle;
-    this.uploadPassword = uploadPassword;
-    this.contentPassword = contentPassword;
+    // NULLだった場合、空文字を設定する
+    if (uploadPassword == null) {
+      this.animeTitle = "";
+    } else {
+      this.animeTitle = animeTitle;
+    }
+    // NULLだった場合、空文字を設定する
+    if (uploadPassword == null) {
+      this.uploadPassword = "";
+    } else {
+      this.uploadPassword = uploadPassword;
+    }
+    // NULLだった場合、空文字を設定する
+    if (contentPassword == null) {
+      this.contentPassword = "";
+    } else {
+      this.contentPassword = contentPassword;
+    }
     this.hiddenFlg = hiddenFlg;
     this.lockFlg = lockFlg;
   }

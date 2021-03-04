@@ -1,15 +1,7 @@
 package pathControler;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.security.CodeSource;
-import java.security.ProtectionDomain;
-
-import JavaFXSample.javafx.App;
+// TODO コメント修正、プログラム正規化
 
 /**
  * Propertiesファイル作成クラス
@@ -20,38 +12,28 @@ import JavaFXSample.javafx.App;
 public class GetPath {
 
   /**
-   * rootのフォルダパスを取得。
+   * 実行可能jarの格納フォルダパスを取得
    *
-   * @param targetFilePath
-   * @param targetFileName
-   * @return rootのフォルダパス
+   * @return jarファイルパスを取得
+   * @throws IOException
    * @version 2021/01/05 1.0.0 新規作成
    * @since 1.0.0
    * @author wadamasaya
-   * @throws IOException
-   * @throws URISyntaxException
    */
-  public static String getResourceStr() throws URISyntaxException {
-    // Propertiesに各設定をセットする
-    return getApplicationPath(App.class).getParent().toString();
+  public static String getRootPath() throws IOException {
+    return ClassPathLocator.getLocation().getParent();
   }
 
   /**
-   * 引数に渡した、クラスのファイルパスを取得。
+   * 設定フォルダパスを取得
    *
+   * @return 設定フォルダパスを取得
    * @throws IOException
    * @version 2021/01/05 1.0.0 新規作成
    * @since 1.0.0
    * @author wadamasaya
-   * @throws URISyntaxException
    */
-  public static Path getApplicationPath(Class<?> cls) throws URISyntaxException {
-    ProtectionDomain pd = cls.getProtectionDomain();
-    CodeSource cs = pd.getCodeSource();
-    URL location = cs.getLocation();
-    URI uri = location.toURI();
-    Path path = Paths.get(uri);
-    return path;
+  public static String getConfigPath() throws IOException {
+    return ClassPathLocator.getLocation().getParent() + "/config";
   }
-
 }

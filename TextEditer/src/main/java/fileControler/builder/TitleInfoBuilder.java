@@ -7,6 +7,7 @@ import java.util.List;
 import constants.CsvConstants;
 // TODO コメント修正、プログラム正規化
 import dataClass.javaFxTreeView.TitleInfo;
+import pathControler.GetPath;
 
 /**
  *
@@ -19,7 +20,7 @@ public class TitleInfoBuilder {
 
   public static void itemInfoBuilder(List<TitleInfo> titleInfoList) throws IOException {
     // TODO ファイルパスはpropertieファイルで管理
-    FileWriter fileWriter = new FileWriter("src/main/resources/Files/TitleInfo.csv");
+    FileWriter fileWriter = new FileWriter(GetPath.getConfigPath() + "/TitleInfo.csv");
 
     // リストの内容を順に処理
     for (TitleInfo titleInfo : titleInfoList) {

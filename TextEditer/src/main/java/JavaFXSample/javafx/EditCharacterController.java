@@ -303,7 +303,11 @@ public class EditCharacterController {
 
     // 最小値が見つからなかった場合
     if (noUsedNum.equals(0)) {
-      noUsedNum = usedNumList.get(usedNumList.size() - 1) + 1;
+      if (usedNumList.isEmpty()) {
+        noUsedNum = 1;
+      } else {
+        noUsedNum = usedNumList.get(usedNumList.size() - 1) + 1;
+      }
     }
 
     // 未使用の最小値をString型に変換

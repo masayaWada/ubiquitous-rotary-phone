@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import constants.CsvConstants;
 // TODO コメント修正、プログラム正規化
+import pathControler.GetPath;
 
 /**
  * TextFolderフォルダ内のファイル作成処理
@@ -16,7 +17,7 @@ public class ContentTextBuilder {
 
   public static void itemInfoBuilder(String[] data, String filePath) throws IOException {
     // TODO ファイルパスはpropertieファイルで管理
-    FileWriter fileWriter = new FileWriter("src/main/resources/Files/TextFolder/" + filePath);
+    FileWriter fileWriter = new FileWriter(GetPath.getConfigPath() + "/TextFolder/" + filePath);
 
     // リストの内容を順に処理
     for (String line_data : data) {

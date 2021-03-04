@@ -7,6 +7,7 @@ import java.util.List;
 import constants.CsvConstants;
 // TODO コメント修正、プログラム正規化
 import dataClass.javaFxTreeView.ItemInfo;
+import pathControler.GetPath;
 
 /**
  * FileInfoファイル作成処理
@@ -18,7 +19,7 @@ public class ItemInfoBuilder {
 
   public static void itemInfoBuilder(List<ItemInfo> dataInfoList) throws IOException {
     // TODO ファイルパスはpropertieファイルで管理
-    FileWriter fileWriter = new FileWriter("src/main/resources/Files/FileInfo.csv");
+    FileWriter fileWriter = new FileWriter(GetPath.getConfigPath() + "/FileInfo.csv");
 
     // リストの内容を順に処理
     for (ItemInfo dataInfo : dataInfoList) {

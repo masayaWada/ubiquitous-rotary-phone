@@ -7,6 +7,7 @@ import java.util.List;
 import constants.CsvConstants;
 // TODO コメント修正、プログラム正規化
 import dataClass.javaFxTreeView.ProjectInfo;
+import pathControler.GetPath;
 
 /**
  * ProjectInfoファイル作成処理
@@ -18,7 +19,7 @@ public class ProjectInfoBuilder {
 
   public static void projectInfoBuilder(List<ProjectInfo> dataInfoList) throws IOException {
     // TODO ファイルパスはpropertieファイルで管理
-    FileWriter fileWriter = new FileWriter("src/main/resources/Files/ProjectInfo.csv");
+    FileWriter fileWriter = new FileWriter(GetPath.getConfigPath() + "/ProjectInfo.csv");
 
     // リストの内容を順に処理
     for (ProjectInfo dataInfo : dataInfoList) {

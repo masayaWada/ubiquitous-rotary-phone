@@ -5,15 +5,21 @@ import java.io.IOException;
 import java.util.List;
 
 import dataClass.javaFxTreeView.CharInfo;
+import dataClass.javaFxTreeView.ItemInfo;
+import dataClass.javaFxTreeView.ProjectInfo;
+import dataClass.javaFxTreeView.ProjectProperty;
 import fileControler.builder.CssBuilder;
 import fileControler.builder.HtmlBuilder;
 import fileControler.load.CharCssInfoLoader;
+import fileControler.load.FolderInfoLoader;
+import fileControler.load.ItemInfoLoader;
+import fileControler.load.ProjectInfoLoader;
 import fileControler.load.PropertiesLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-// TODO コメント修正、プログラム正規化
+import pathControler.GetPath;
 
 /**
 * SentenceCheck画面のコントローラー
@@ -56,14 +62,36 @@ public class SentenceCheckController {
     String[] targetProperties = PropertiesLoader.tmpPathDataLoader();
 
     // 編集対象のファイル内容を読込、HTMLファイルを作成する
-    String filePath = "src/main/resources/Files/TextFolder/" + targetProperties[0];
+    String filePath = GetPath.getConfigPath() + "/TextFolder/" + targetProperties[0];
     HtmlBuilder.htmlBuilder(filePath);
 
-    List<CharInfo> a = CharCssInfoLoader.charCssInfoLoader("鬼滅の刃");
+    // 編集対象のファイル情報を取得
+    List<ItemInfo> itemInfoList = ItemInfoLoader.itemInfoLoader();
+    String projectName = null;
+    for (Integer i = 0; i < itemInfoList.size(); i++) {
+      if (targetProperties[0].equals(itemInfoList.get(i).getFilePath())) {
+        // TreeViewの選択箇所のデータを取得
+        projectName = itemInfoList.get(i).getParentFolderPath();
+      }
+    }
+
+    // 編集対象のプロジェクト情報を取得
+    List<ProjectInfo> projectInfoList = ProjectInfoLoader.projectInfoLoader();
+    String projectInfoPath = null;
+    for (ProjectInfo projectInfo : projectInfoList) {
+      if (projectName.equals(projectInfo.getProjectName())) {
+        projectInfoPath = projectInfo.getProjectInfoPath();
+      }
+    }
+
+    // CSVファイルを読込、FileInfoのリストを返却する。
+    ProjectProperty projectProperty = FolderInfoLoader.folderInfoLoader(projectInfoPath);
+
+    List<CharInfo> a = CharCssInfoLoader.charCssInfoLoader(projectProperty.getAnimeTitle());
     CssBuilder.cssBuilder(a);
 
     // 作成したHTMLのファイルオブジェクトを作成
-    String search = "src/main/resources/Files/SentenceCheck/tmp.html";
+    String search = GetPath.getConfigPath() + "/SentenceCheck/tmp.html";
     File htmlFile = new File(search);
 
     // ファイルオブジェクトからhtmlのURIを取得

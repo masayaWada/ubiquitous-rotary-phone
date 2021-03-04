@@ -3,6 +3,8 @@ package fileControler.builder;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
+
+import pathControler.GetPath;
 // TODO コメント修正、プログラム正規化
 
 /**
@@ -30,10 +32,7 @@ public class PropertiesBuilder {
     settings.setProperty("TargetFileName", targetFileName);
 
     // TODO フォルダパスはpropertieファイルで管理
-    FileOutputStream out = new FileOutputStream("src/main/resources/Files/TmpPathData.properties");
-    // TODO 読込対象ファイルを動的に取得できるようにする
-    // FileOutputStream out = new
-    // FileOutputStream(App.class.getResource("TmpPathData.properties").getPath());
+    FileOutputStream out = new FileOutputStream(GetPath.getConfigPath() + "/TmpPathData.properties");
 
     // セットした設定を上書き
     settings.store(out, "遷移先一時保存ファイル");
@@ -57,10 +56,7 @@ public class PropertiesBuilder {
     settings.setProperty("NowEditProjectName", nowEditProjectName);
 
     // TODO フォルダパスはpropertieファイルで管理
-    FileOutputStream out = new FileOutputStream("src/main/resources/Files/TmpData.properties");
-    // TODO 読込対象ファイルを動的に取得できるようにする
-    // FileOutputStream out = new
-    // FileOutputStream(App.class.getResource("TmpData.properties").getPath());
+    FileOutputStream out = new FileOutputStream(GetPath.getConfigPath() + "/TmpData.properties");
 
     // セットした設定を上書き
     settings.store(out, "各種情報一時保存ファイル");

@@ -15,7 +15,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-// TODO コメント修正、プログラム正規化
+import pathControler.GetPath;
 
 /**
 * EditTitle画面のコントローラー
@@ -91,7 +91,7 @@ public class EditTitleController {
       a.add(b);
 
       // ファイル作成を行う
-      File file = new File("src/main/resources/Files/CharacterInfo/" + b.getFilePath());
+      File file = new File(GetPath.getConfigPath() + "/CharacterInfo/" + b.getFilePath());
       file.createNewFile();
 
       // TitleInfoをCSVに上書きする
@@ -128,7 +128,7 @@ public class EditTitleController {
       if (result.get() == ButtonType.OK) {
 
         // ファイルオブジェクトの宣言
-        File file = new File("src/main/resources/Files/CharacterInfo/" + a.get(focusedIndex).getFilePath());
+        File file = new File(GetPath.getConfigPath() + "/CharacterInfo/" + a.get(focusedIndex).getFilePath());
 
         // ファイル削除、TitleInfoから削除
         file.delete();

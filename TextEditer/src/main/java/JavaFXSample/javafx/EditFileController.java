@@ -13,7 +13,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
-// TODO コメント修正、プログラム正規化
+import pathControler.GetPath;
 
 /**
 * EditFile画面のコントローラー
@@ -43,23 +43,23 @@ public class EditFileController {
   @FXML
   private void switchToSecondary() throws IOException {
 
-	  boolean closeFlg = true;
+    boolean closeFlg = true;
 
-	  if(changeConfirmation()) {
-		  // 保存されていない場合アラートを表示する
-		  Alert alert = new Alert( AlertType.NONE , "" , ButtonType.OK ,ButtonType.CANCEL);
-		  alert.setTitle( "変更が保存されておりません！" );
-		  alert.getDialogPane().setContentText( "変更した内容が保存されておりません。\nこのままTOP画面に戻ると、変更した内容が失われてしまいますが\nそれでもよろしいですか。" );
-	    ButtonType button = alert.showAndWait().orElse( ButtonType.CANCEL );
+    if (changeConfirmation()) {
+      // 保存されていない場合アラートを表示する
+      Alert alert = new Alert(AlertType.NONE, "", ButtonType.OK, ButtonType.CANCEL);
+      alert.setTitle("変更が保存されておりません！");
+      alert.getDialogPane().setContentText("変更した内容が保存されておりません。\nこのままTOP画面に戻ると、変更した内容が失われてしまいますが\nそれでもよろしいですか。");
+      ButtonType button = alert.showAndWait().orElse(ButtonType.CANCEL);
 
-	    if(!"OK_DONE".equals(button.getButtonData().toString())) {
-	    	closeFlg = false;
-	    }
-	  }
+      if (!"OK_DONE".equals(button.getButtonData().toString())) {
+        closeFlg = false;
+      }
+    }
 
-	  if(closeFlg) {
-		  App.setRoot("top");
-	  }
+    if (closeFlg) {
+      App.setRoot("top");
+    }
 
   }
 
@@ -95,16 +95,15 @@ public class EditFileController {
    * @since 1.0.0
    * @author wadamasaya
    */
-  private Boolean changeConfirmation() throws IOException{
-	// 編集対象のファイルパスを取得
-	String[] targetProperties = PropertiesLoader.tmpPathDataLoader();
+  private Boolean changeConfirmation() throws IOException {
+    // 編集対象のファイルパスを取得
+    String[] targetProperties = PropertiesLoader.tmpPathDataLoader();
 
-	  // ファイルの内容を取得する
-	  String fileContentValue = textLoader(targetProperties[0]);
-	  String tmpFileContentValue = textLoader("tmp.csv");
-	  return !fileContentValue.equals(tmpFileContentValue);
+    // ファイルの内容を取得する
+    String fileContentValue = textLoader(targetProperties[0]);
+    String tmpFileContentValue = textLoader("tmp.csv");
+    return !fileContentValue.equals(tmpFileContentValue);
   }
-
 
   /**
    * 引数のファイルの内容を取得する
@@ -115,15 +114,15 @@ public class EditFileController {
    * @since 1.0.0
    * @author wadamasaya
    */
-  private String textLoader(String filePath) throws IOException{
-	  // 編集対象のファイル内容を読込
-	  List<String[]> data = CsvLoader.csvLoader("src/main/resources/Files/TextFolder/" + filePath);
-	  // 読み込んだ内容を整形
-	  String contectValue = "";
-	  for (String[] line_data : data) {
-		  contectValue = contectValue + line_data[0] + NEW_LINE;
-	 }
-	return contectValue;
+  private String textLoader(String filePath) throws IOException {
+    // 編集対象のファイル内容を読込
+    List<String[]> data = CsvLoader.csvLoader(GetPath.getConfigPath() + "/TextFolder/" + filePath);
+    // 読み込んだ内容を整形
+    String contectValue = "";
+    for (String[] line_data : data) {
+      contectValue = contectValue + line_data[0] + NEW_LINE;
+    }
+    return contectValue;
   }
 
   /**
@@ -210,7 +209,7 @@ public class EditFileController {
     // 入力文字数を表示
     strQuantityLabel.setText(strQuantity + "文字");
 
-    //現在の内容を一時ファイルに保持
+    // 現在の内容を一時ファイルに保持
     tmpfileSave();
   }
 }

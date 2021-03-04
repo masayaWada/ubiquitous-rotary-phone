@@ -8,6 +8,7 @@ import java.util.List;
 import constants.CsvConstants;
 // TODO コメント修正、プログラム正規化
 import dataClass.javaFxTreeView.CharInfo;
+import pathControler.GetPath;
 
 /**
  * CSSファイル作成処理
@@ -19,7 +20,7 @@ public class CssBuilder {
 
   public static void cssBuilder(List<CharInfo> a) throws IOException {
     // TODO ファイルパスはpropertieファイルで管理
-    File cssFile = new File("src/main/resources/Files/SentenceCheck/css/styleSheet.css");
+    File cssFile = new File(GetPath.getConfigPath() + "/SentenceCheck/css/styleSheet.css");
     FileWriter filewriter = new FileWriter(cssFile);
 
     // body,div,各キャラのCSSを作成

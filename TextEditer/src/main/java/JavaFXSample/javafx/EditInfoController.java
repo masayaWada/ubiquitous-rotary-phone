@@ -26,7 +26,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-// TODO コメント修正、プログラム正規化
+import pathControler.GetPath;
 
 /**
 * EditInfo画面のコントローラー
@@ -56,16 +56,14 @@ public class EditInfoController {
     App.setRoot("top");
   }
 
-  // アイコンフォルダパス
-  String iconFolderPath = "src/main/resources/JavaFXSample/javafx/Icons/";
   // 表示アイコンを取得
-  private final Image hiddenIcon = new Image(new File(iconFolderPath + "eye-line.png").toURI().toString());
+  private final Image hiddenIcon = new Image(getClass().getResourceAsStream("Icons/eye-line.png"));
   // 非表示アイコンを取得
-  private final Image unhiddenIcon = new Image(new File(iconFolderPath + "eye-off-line.png").toURI().toString());
+  private final Image unhiddenIcon = new Image(getClass().getResourceAsStream("Icons/eye-off-line.png"));
   // 解除アイコンを取得
-  private final Image unlockIcon = new Image(new File(iconFolderPath + "lock-unlock-line.png").toURI().toString());
+  private final Image unlockIcon = new Image(getClass().getResourceAsStream("Icons/lock-unlock-line.png"));
   // 保護アイコンを取得
-  private final Image lockIcon = new Image(new File(iconFolderPath + "lock-line.png").toURI().toString());
+  private final Image lockIcon = new Image(getClass().getResourceAsStream("Icons/lock-line.png"));
 
   /**
    * 画面の初期化処理
@@ -210,7 +208,7 @@ public class EditInfoController {
         // プロジェクト内のファイルを全て削除する
         if (targetProperties[1].equals(a.get(i).getParentFolderPath())) {
           // ファイルオブジェクトを作成し、ファイルを削除する
-          File file = new File("src/main/resources/Files/TextFolder/" + a.get(i).getFilePath());
+          File file = new File(GetPath.getConfigPath() + "/TextFolder/" + a.get(i).getFilePath());
           file.delete();
           // ItemInfoから削除
           a.remove(a.indexOf(a.get(i)));
@@ -225,10 +223,10 @@ public class EditInfoController {
         if (targetProperties[0].equals(b.get(i).getProjectInfoPath()) &&
             targetProperties[1].equals(b.get(i).getProjectName())) {
           // ファイルオブジェクトを作成し、プロジェクト情報ファイルを削除する
-          File file = new File("src/main/resources/Files/FolderInfo/" + b.get(i).getProjectInfoPath());
+          File file = new File(GetPath.getConfigPath() + "/FolderInfo/" + b.get(i).getProjectInfoPath());
           file.delete();
           // ファイルオブジェクトを作成し、フォルダを削除する
-          File folder = new File("src/main/resources/Files/TextFolder/" + b.get(i).getFolderPath());
+          File folder = new File(GetPath.getConfigPath() + "/TextFolder/" + b.get(i).getFolderPath());
           folder.delete();
           // ProjectInfoから削除
           b.remove(b.indexOf(b.get(i)));

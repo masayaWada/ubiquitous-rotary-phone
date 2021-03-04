@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import dataClass.javaFxTreeView.ProjectProperty;
+import pathControler.GetPath;
 
 /**
  * FolderInfoフォルダ内のファイル作成処理
@@ -23,7 +24,7 @@ public class FolderInfoBuilder {
     settings.setProperty("LockFlg", a.getLockFlg().toString());
 
     // TODO フォルダパスはpropertieファイルで管理
-    FileOutputStream out = new FileOutputStream("src/main/resources/Files/FolderInfo/" + propertieFileName);
+    FileOutputStream out = new FileOutputStream(GetPath.getConfigPath() + "/FolderInfo/" + propertieFileName);
     // セットした設定を上書き
     settings.store(out, "遷移先一時保存ファイル");
     if (out != null) {

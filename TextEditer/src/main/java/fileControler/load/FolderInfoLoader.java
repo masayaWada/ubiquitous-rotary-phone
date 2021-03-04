@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import dataClass.javaFxTreeView.ProjectProperty;
+import pathControler.GetPath;
 
 public class FolderInfoLoader {
   /**
@@ -21,7 +22,7 @@ public class FolderInfoLoader {
     Properties settings = new Properties();
     FileInputStream in = null;
     try {
-      in = new FileInputStream("src/main/resources/Files/FolderInfo/" + propertieFileName);
+      in = new FileInputStream(GetPath.getConfigPath() + "/FolderInfo/" + propertieFileName);
       settings.load(in);
     } finally {
       if (in != null) {

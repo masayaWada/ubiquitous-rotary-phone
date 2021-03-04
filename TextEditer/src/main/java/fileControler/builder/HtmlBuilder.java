@@ -7,9 +7,17 @@ import java.util.List;
 
 import constants.CsvConstants;
 import dataClass.javaFxTreeView.CharInfo;
+import dataClass.javaFxTreeView.ItemInfo;
+import dataClass.javaFxTreeView.ProjectInfo;
+import dataClass.javaFxTreeView.ProjectProperty;
 import fileControler.load.CharCssInfoLoader;
 import fileControler.load.CsvLoader;
+import fileControler.load.FolderInfoLoader;
+import fileControler.load.ItemInfoLoader;
+import fileControler.load.ProjectInfoLoader;
+import fileControler.load.PropertiesLoader;
 // TODO コメント修正、プログラム正規化
+import pathControler.GetPath;
 
 /**
  * HTMLファイル作成処理
@@ -25,15 +33,20 @@ public class HtmlBuilder {
     List<String[]> data = CsvLoader.csvLoader(filePath);
 
     // TODO ファイルパスはpropertieファイルで管理
-    File htmlFile = new File("src/main/resources/Files/SentenceCheck/tmp.html");
+    File htmlFile = new File(GetPath.getConfigPath() + "/SentenceCheck/tmp.html");
     FileWriter filewriter = new FileWriter(htmlFile);
 
     filewriter.write("<!DOCTYPE html>" + CsvConstants.NEW_LINE);
     filewriter.write("<html lang=\"ja\">" + CsvConstants.NEW_LINE);
     filewriter.write("  <head>" + CsvConstants.NEW_LINE);
-    filewriter.write("    <meta charset=\"UTF-8\">" + CsvConstants.NEW_LINE);
+    // システム文字列をもとにHTMLエンコードを指定する
+    if ("UTF-8".equals(System.getProperty("file.encoding"))) {
+      filewriter.write("    <meta charset=\"UTF-8\">" + CsvConstants.NEW_LINE);
+    } else {
+      filewriter.write("    <meta charset=\"Shift_JIS\">" + CsvConstants.NEW_LINE);
+    }
     // TODO リンクするCSSファイルのディレクトリを修正
-    filewriter.write("    <link rel=\"stylesheet\" href=\"./css/styleSheet.css\">" + CsvConstants.NEW_LINE);
+    filewriter.write("    <link rel=\"stylesheet\" href=\"css/styleSheet.css\">" + CsvConstants.NEW_LINE);
     filewriter.write("    <title>CSS</title>" + CsvConstants.NEW_LINE);
     filewriter.write("  </head>" + CsvConstants.NEW_LINE);
     filewriter.write("  <body>" + CsvConstants.NEW_LINE);
@@ -68,10 +81,37 @@ public class HtmlBuilder {
    * @version 2021/01/05 1.0.0 新規作成
    * @since 1.0.0
    * @author wadamasaya
+   * @throws IOException
    */
-  private static String applyCssChecker(char charInitial) {
+  private static String applyCssChecker(char charInitial) throws IOException {
+
+    // 編集対象のファイルパスを取得
+    String[] targetProperties = PropertiesLoader.tmpPathDataLoader();
+
+    // 編集対象のファイル情報を取得
+    List<ItemInfo> itemInfoList = ItemInfoLoader.itemInfoLoader();
+    String projectName = null;
+    for (Integer i = 0; i < itemInfoList.size(); i++) {
+      if (targetProperties[0].equals(itemInfoList.get(i).getFilePath())) {
+        // TreeViewの選択箇所のデータを取得
+        projectName = itemInfoList.get(i).getParentFolderPath();
+      }
+    }
+
+    // 編集対象のプロジェクト情報を取得
+    List<ProjectInfo> projectInfoList = ProjectInfoLoader.projectInfoLoader();
+    String projectInfoPath = null;
+    for (ProjectInfo projectInfo : projectInfoList) {
+      if (projectName.equals(projectInfo.getProjectName())) {
+        projectInfoPath = projectInfo.getProjectInfoPath();
+      }
+    }
+
+    // CSVファイルを読込、FileInfoのリストを返却する。
+    ProjectProperty projectProperty = FolderInfoLoader.folderInfoLoader(projectInfoPath);
+
     // TODO アニメ名は動的にセットするよう修正
-    List<CharInfo> a = CharCssInfoLoader.charCssInfoLoader("鬼滅の刃");
+    List<CharInfo> a = CharCssInfoLoader.charCssInfoLoader(projectProperty.getAnimeTitle());
     for (CharInfo charCssInfo : a) {
       // キャラ頭文字確認
       if (String.valueOf(charInitial).equals(charCssInfo.getCharInitial())) {

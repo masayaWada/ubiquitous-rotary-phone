@@ -1,9 +1,11 @@
 package fileControler.load;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import dataClass.javaFxTreeView.ProjectInfo;
+import pathControler.GetPath;
 
 public class ProjectInfoLoader {
 
@@ -14,11 +16,12 @@ public class ProjectInfoLoader {
    * @version 2021/01/05 1.0.0 新規作成
    * @since 1.0.0
    * @author wadamasaya
+   * @throws IOException
    */
-  public static List<ProjectInfo> projectInfoLoader() {
+  public static List<ProjectInfo> projectInfoLoader() throws IOException {
 
     // TODO ファイルパスはpropertieファイルで管理
-    String file_name = "src/main/resources/Files/ProjectInfo.csv";
+    String file_name = GetPath.getConfigPath() + "/ProjectInfo.csv";
     // ItemInfoファイルからデータを取得
     List<String[]> data = CsvLoader.csvLoader(file_name);
 

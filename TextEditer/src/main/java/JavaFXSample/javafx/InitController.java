@@ -1,18 +1,14 @@
 package JavaFXSample.javafx;
 
+import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.security.CodeSource;
-import java.security.ProtectionDomain;
 
 import fileControler.builder.PropertiesBuilder;
 import fileControler.create.FileCreate;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import pathControler.ClassPathLocator;
 
 /**
 * 初期処理画面のコントローラー
@@ -71,27 +67,31 @@ public class InitController {
    * @throws IOException
    */
   private void initBuilder() throws URISyntaxException, IOException {
-    String rootPath = getApplicationPath(App.class).getParent().toString();
+    // 実行可能jarファイルパス取得
+    File rootFile = ClassPathLocator.getLocation();
+    String rootPath = rootFile.getParent();
 
-    // ルートフォルダを作成
-    FileCreate.createFolder(rootPath + "/resources");
-  }
+    // 設定フォルダ作成
+    String configPath = rootPath + "/config";
+    FileCreate.createFolder(configPath);
 
-  /**
-   * 引数に渡した、クラスのファイルパスを取得。
-   *
-   * @throws IOException
-   * @version 2021/01/05 1.0.0 新規作成
-   * @since 1.0.0
-   * @author wadamasaya
-   * @throws URISyntaxException
-   */
-  public static Path getApplicationPath(Class<?> cls) throws URISyntaxException {
-    ProtectionDomain pd = cls.getProtectionDomain();
-    CodeSource cs = pd.getCodeSource();
-    URL location = cs.getLocation();
-    URI uri = location.toURI();
-    Path path = Paths.get(uri);
-    return path;
+    // 各種フォルダ・ファイル作成
+    FileCreate.createFolder(configPath + "/CharacterInfo");
+    FileCreate.createFolder(configPath + "/FolderInfo");
+
+    FileCreate.createFolder(configPath + "/SentenceCheck");
+    FileCreate.createFolder(configPath + "/SentenceCheck/css");
+    FileCreate.createFile(configPath + "/SentenceCheck/tmp.html");
+    FileCreate.createFile(configPath + "/SentenceCheck/css/styleSheet.css");
+
+    FileCreate.createFolder(configPath + "/TextFolder");
+    FileCreate.createFile(configPath + "/TextFolder/tmp.csv");
+
+    FileCreate.createFile(configPath + "/FileInfo.csv");
+    FileCreate.createFile(configPath + "/FilePath.properties");
+    FileCreate.createFile(configPath + "/ProjectInfo.csv");
+    FileCreate.createFile(configPath + "/TitleInfo.csv");
+    FileCreate.createFile(configPath + "/TmpData.properties");
+    FileCreate.createFile(configPath + "/TmpPathData.properties");
   }
 }

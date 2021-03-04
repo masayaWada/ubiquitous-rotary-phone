@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Properties;
 // TODO コメント修正、プログラム正規化
 
+import pathControler.GetPath;
+
 public class PropertiesLoader {
 
   /**
@@ -20,7 +22,7 @@ public class PropertiesLoader {
     Properties settings = new Properties();
     FileInputStream in = null;
     try {
-      in = new FileInputStream("src/main/resources/Files/TmpPathData.properties");
+      in = new FileInputStream(GetPath.getConfigPath() + "/TmpPathData.properties");
       settings.load(in);
     } finally {
       if (in != null) {
@@ -49,7 +51,7 @@ public class PropertiesLoader {
     Properties settings = new Properties();
     FileInputStream in = null;
     try {
-      in = new FileInputStream("src/main/resources/Files/TmpData.properties");
+      in = new FileInputStream(GetPath.getConfigPath() + "/TmpData.properties");
       settings.load(in);
     } finally {
       if (in != null) {
