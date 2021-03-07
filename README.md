@@ -1,2 +1,2 @@
 # ubiquitous-rotary-phone
-MineCraftMod作成用
+てみぃエディター作成用
