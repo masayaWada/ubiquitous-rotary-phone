@@ -6,8 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 import constants.CsvConstants;
-// TODO コメント修正、プログラム正規化
-import dataClass.javaFxTreeView.CharInfo;
+import dataClass.CharInfo;
 import pathControler.GetPath;
 
 /**

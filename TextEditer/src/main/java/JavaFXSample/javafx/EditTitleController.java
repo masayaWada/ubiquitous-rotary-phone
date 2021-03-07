@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import dataClass.javaFxTreeView.TitleInfo;
+import dataClass.TitleInfo;
 import fileControler.builder.TitleInfoBuilder;
 import fileControler.load.TitleInfoLoader;
 import javafx.fxml.FXML;

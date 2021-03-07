@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import dataClass.javaFxTreeView.ItemInfo;
-import dataClass.javaFxTreeView.ProjectInfo;
-import dataClass.javaFxTreeView.ProjectProperty;
-import dataClass.javaFxTreeView.TitleInfo;
+import dataClass.ItemInfo;
+import dataClass.ProjectInfo;
+import dataClass.ProjectProperty;
+import dataClass.TitleInfo;
 import fileControler.builder.FolderInfoBuilder;
 import fileControler.builder.ItemInfoBuilder;
 import fileControler.builder.ProjectInfoBuilder;

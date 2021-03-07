@@ -5,8 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import constants.CsvConstants;
-// TODO コメント修正、プログラム正規化
-import dataClass.javaFxTreeView.CharInfo;
+import dataClass.CharInfo;
 import pathControler.GetPath;
 
 /**
@@ -27,7 +26,6 @@ public class CharCssInfoBuilder {
    * @throws IOException
    */
   public static void charCssInfoBuilder(final List<CharInfo> charInfoList, final String titleName) throws IOException {
-    // TODO ファイルパスはpropertieファイルで管理
     FileWriter fileWriter = new FileWriter(GetPath.getConfigPath() + "/CharacterInfo/" + titleName + ".csv");
 
     // リストの内容を順に処理

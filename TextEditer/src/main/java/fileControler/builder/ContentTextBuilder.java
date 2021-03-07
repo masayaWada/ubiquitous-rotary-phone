@@ -16,7 +16,6 @@ import pathControler.GetPath;
 public class ContentTextBuilder {
 
   public static void itemInfoBuilder(String[] data, String filePath) throws IOException {
-    // TODO ファイルパスはpropertieファイルで管理
     FileWriter fileWriter = new FileWriter(GetPath.getConfigPath() + "/TextFolder/" + filePath);
 
     // リストの内容を順に処理

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dataClass.javaFxTreeView.TitleInfo;
+import dataClass.TitleInfo;
 import pathControler.GetPath;
 
 public class TitleInfoLoader {

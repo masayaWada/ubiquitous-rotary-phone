@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import dataClass.javaFxTreeView.CharInfo;
-import dataClass.javaFxTreeView.TitleInfo;
+import dataClass.CharInfo;
+import dataClass.TitleInfo;
 import fileControler.builder.CharCssInfoBuilder;
 import fileControler.load.CharCssInfoLoader;
 import fileControler.load.TitleInfoLoader;

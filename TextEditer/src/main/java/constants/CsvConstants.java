@@ -17,8 +17,19 @@ public class CsvConstants {
   private CsvConstants() {
   }
 
-  // カンマ
+  /**
+   * 定数：カンマ
+   * @version 2021/01/05 1.0.0 新規作成
+   * @since 1.0.0
+   * @author wadamasaya
+   */
   public static final String COMMA = ",";
-  // 改行
+
+  /**
+   * 定数：改行コード
+   * @version 2021/01/05 1.0.0 新規作成
+   * @since 1.0.0
+   * @author wadamasaya
+   */
   public static final String NEW_LINE = "\r\n";
 }

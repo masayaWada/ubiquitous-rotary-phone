@@ -21,11 +21,11 @@ public class GetDate {
    * @author wadamasaya
    */
   public static String getNowDate() throws IOException {
+    // 日時情報フォーマットを宣言
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
     // 現在日時情報で初期化されたインスタンスの生成
     Date dateObj = new Date();
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-    // 日時情報を指定フォーマットの文字列で取得
-    String dateStr = format.format(dateObj);
-    return dateStr;
+    // 日時情報を指定フォーマットの文字列を返却
+    return format.format(dateObj);
   }
 }

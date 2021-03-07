@@ -4,7 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import dataClass.javaFxTreeView.ProjectProperty;
+import dataClass.ProjectProperty;
 import pathControler.GetPath;
 
 /**

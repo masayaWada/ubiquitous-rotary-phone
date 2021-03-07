@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import dataClass.javaFxTreeView.CharInfo;
-import dataClass.javaFxTreeView.ItemInfo;
-import dataClass.javaFxTreeView.ProjectInfo;
-import dataClass.javaFxTreeView.ProjectProperty;
+import dataClass.CharInfo;
+import dataClass.ItemInfo;
+import dataClass.ProjectInfo;
+import dataClass.ProjectProperty;
 import fileControler.builder.CssBuilder;
 import fileControler.builder.HtmlBuilder;
 import fileControler.load.CharCssInfoLoader;

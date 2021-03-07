@@ -2,7 +2,6 @@ package fileControler.create;
 
 import java.io.File;
 import java.io.IOException;
-// TODO コメント修正、プログラム正規化
 
 /**
  * ファイル作成処理

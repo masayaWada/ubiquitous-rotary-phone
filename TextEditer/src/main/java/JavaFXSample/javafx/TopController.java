@@ -7,10 +7,10 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import converter.CharConverter;
-import dataClass.javaFxTreeView.ItemInfo;
-import dataClass.javaFxTreeView.ProjectInfo;
-import dataClass.javaFxTreeView.ProjectProperty;
-import dataClass.javaFxTreeView.TreeItemData.Type;
+import dataClass.ItemInfo;
+import dataClass.ProjectInfo;
+import dataClass.ProjectProperty;
+import dataClass.TreeItemData.Type;
 import date.GetDate;
 import fileControler.builder.ItemInfoBuilder;
 import fileControler.builder.ProjectInfoBuilder;

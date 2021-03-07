@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.util.List;
 
 import constants.CsvConstants;
-import dataClass.javaFxTreeView.CharInfo;
-import dataClass.javaFxTreeView.ItemInfo;
-import dataClass.javaFxTreeView.ProjectInfo;
-import dataClass.javaFxTreeView.ProjectProperty;
+import dataClass.CharInfo;
+import dataClass.ItemInfo;
+import dataClass.ProjectInfo;
+import dataClass.ProjectProperty;
 import fileControler.load.CharCssInfoLoader;
 import fileControler.load.CsvLoader;
 import fileControler.load.FolderInfoLoader;

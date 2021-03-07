@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dataClass.javaFxTreeView.CharInfo;
+import dataClass.CharInfo;
 import pathControler.GetPath;
 
 public class CharCssInfoLoader {

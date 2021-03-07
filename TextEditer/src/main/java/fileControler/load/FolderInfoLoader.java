@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import dataClass.javaFxTreeView.ProjectProperty;
+import dataClass.ProjectProperty;
 import pathControler.GetPath;
 
 public class FolderInfoLoader {
