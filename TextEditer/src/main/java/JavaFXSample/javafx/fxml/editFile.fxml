@@ -33,14 +33,14 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Label fx:id="strQuantityLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="100.0" text="入力文字数表示">
+            <Label fx:id="strQuantityLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="100.0" text="入力Byte数表示">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
          </children>
       </HBox>
-      <TextArea fx:id="TextArea01" onKeyPressed="#countStrQuantity" prefHeight="370.0" prefWidth="600.0" translateY="-45.0" />
+      <TextArea fx:id="TextArea01" onKeyPressed="#strByteCount" prefHeight="370.0" prefWidth="600.0" translateY="-45.0" />
       <Button mnemonicParsing="false" onAction="#switchToSecondary" translateX="570.0" translateY="10.0">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">

@@ -3,6 +3,7 @@ package JavaFXSample.javafx;
 import java.io.IOException;
 import java.util.List;
 
+import count.ByteCounter;
 import fileControler.builder.ContentTextBuilder;
 import fileControler.load.CsvLoader;
 import fileControler.load.PropertiesLoader;
@@ -84,7 +85,7 @@ public class EditFileController {
    */
   public void initialize() throws IOException {
     fileOpener();
-    countStrQuantity();
+    strByteCount();
   }
 
   /**
@@ -183,19 +184,19 @@ public class EditFileController {
   }
 
   /**
-   * 入力内容の文字数表示
+   * 入力内容のByte表示
    * @throws IOException
    * @version 2021/01/05 1.0.0 新規作成
    * @since 1.0.0
    * @author wadamasaya
    */
   @FXML
-  private void countStrQuantity() throws IOException {
+  private void strByteCount() throws IOException {
     // テキストエリアから値を取得
     String inputData = TextArea01.getText();
 
     // 入力文字数を取得
-    int strQuantity = inputData.length();
+    int strQuantity = ByteCounter.getByte(inputData, "Shift_JIS");
 
     // 入力文字数を元に文字色を設定
     if (strQuantity >= 2048) {
@@ -207,7 +208,7 @@ public class EditFileController {
     }
 
     // 入力文字数を表示
-    strQuantityLabel.setText(strQuantity + "文字");
+    strQuantityLabel.setText(strQuantity + "Byte");
 
     // 現在の内容を一時ファイルに保持
     tmpfileSave();
