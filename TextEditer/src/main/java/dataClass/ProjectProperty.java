@@ -1,7 +1,5 @@
 package dataClass;
 
-import converter.CharConverter;
-
 /**
  * FileInfo用メンバメソッド
  * @version 2021/01/05 1.0.0 新規作成
@@ -29,11 +27,9 @@ public class ProjectProperty {
    */
   public ProjectProperty(String animeTitle, String uploadPassword, String contentPassword, Boolean hiddenFlg,
       Boolean lockFlg) {
-    // NULLだった場合、空文字を設定する
-    this.animeTitle = CharConverter.nullMask(animeTitle);
-    this.uploadPassword = CharConverter.nullMask(uploadPassword);
-    this.contentPassword = CharConverter.nullMask(contentPassword);
-
+    this.animeTitle = animeTitle;
+    this.uploadPassword = uploadPassword;
+    this.contentPassword = contentPassword;
     this.hiddenFlg = hiddenFlg;
     this.lockFlg = lockFlg;
   }

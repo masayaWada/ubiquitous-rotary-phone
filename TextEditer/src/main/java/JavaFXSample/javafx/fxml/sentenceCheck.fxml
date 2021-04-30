@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-<VBox maxHeight="480.0" maxWidth="640.0" minHeight="480.0" minWidth="640.0" prefHeight="480.0" prefWidth="640.0" spacing="20.0" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFXSample.javafx.SentenceCheckController">
+<VBox maxHeight="480.0" maxWidth="640.0" minHeight="480.0" minWidth="640.0" prefHeight="480.0" prefWidth="640.0" spacing="20.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFXSample.javafx.SentenceCheckController">
     <children>
         <Label fx:id="pathLabel" alignment="TOP_LEFT" prefWidth="640.0" text="ファイルパス表示" translateX="-50.0" translateY="-15.0">
          <graphic>

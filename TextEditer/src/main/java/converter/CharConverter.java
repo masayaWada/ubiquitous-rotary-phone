@@ -42,7 +42,7 @@ public class CharConverter {
    */
   public static String nullMask(String convertTargetStr) {
     // 対象文字列がnullであるかの判断
-    if (convertTargetStr.isEmpty()) {
+    if (convertTargetStr == null) {
       // 空白を返却する
       return "";
     } else {

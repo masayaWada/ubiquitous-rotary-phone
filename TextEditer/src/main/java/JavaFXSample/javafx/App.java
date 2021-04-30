@@ -17,6 +17,8 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
+  // TODO 更新した場合はこちらのバージョンを更新する
+  private static String verStr = "1.0.0";
   private static Scene scene;
 
   /**
@@ -31,7 +33,7 @@ public class App extends Application {
   public void start(Stage stage) throws IOException {
     scene = new Scene(loadFXML("init"), 640, 480);
     stage.setScene(scene);
-    stage.setTitle("TextEditer");
+    stage.setTitle("TextEditer ver" + verStr);
     stage.show();
   }
 

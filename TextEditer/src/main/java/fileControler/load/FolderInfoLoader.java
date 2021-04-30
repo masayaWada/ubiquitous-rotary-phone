@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import converter.CharConverter;
 import dataClass.ProjectProperty;
 import pathControler.GetPath;
 
@@ -30,18 +31,19 @@ public class FolderInfoLoader {
       }
     }
 
-    // 設定ファイルのTargetFilePathを読み込む
-    String animeTitle = settings.getProperty("AnimeTitle");
-    String uploadPassword = settings.getProperty("UploadPassword");
-    String contentPassword = settings.getProperty("ContentPassword");
-    Boolean hiddenFlg = false;
+    // 設定ファイルのTargetFilePathを読み込む(nullの場合、空白を設定する)
+    String animeTitle = CharConverter.nullMask(settings.getProperty("AnimeTitle"));
+    String uploadPassword = CharConverter.nullMask(settings.getProperty("UploadPassword"));
+    String contentPassword = CharConverter.nullMask(settings.getProperty("ContentPassword"));
+
     // HiddenFlgを文字列からBoolean型に変換
+    Boolean hiddenFlg = false;
     if ("true".equals(settings.getProperty("HiddenFlg"))) {
       hiddenFlg = true;
     }
 
-    Boolean lockFlg = false;
     // lockFlgを文字列からBoolean型に変換
+    Boolean lockFlg = false;
     if ("true".equals(settings.getProperty("LockFlg"))) {
       lockFlg = true;
     }

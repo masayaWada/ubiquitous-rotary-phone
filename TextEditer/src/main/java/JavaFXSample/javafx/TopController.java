@@ -30,6 +30,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import pathControler.GetPath;
 
 /**
@@ -40,6 +41,14 @@ import pathControler.GetPath;
  */
 public class TopController {
 
+  /**
+   * プロジェクト画面
+   * @version 2021/01/05 1.0.0 新規作成
+   * @since 1.0.0
+   * @author wadamasaya
+   */
+  @FXML
+  private VBox screen;
   /**
    * プロジェクト作成ボタン
    * @version 2021/01/05 1.0.0 新規作成
@@ -267,6 +276,8 @@ public class TopController {
 
     // TreeViewにTreeItemをセット
     fileNameTreeView.setRoot(rootItem);
+    // rootItemを開いた状態で表示
+    rootItem.setExpanded(true);
   }
 
   /**
@@ -655,5 +666,20 @@ public class TopController {
       }
     }
     return projectName;
+  }
+
+  /**
+   * TreeViewの大きさをリサイズする
+   * @throws IOException
+   * @version 2021/01/05 1.0.0 新規作成
+   * @since 1.0.0
+   * @author wadamasaya
+   */
+  @FXML
+  private void resizeScreen() throws IOException {
+    double x = (double) 15 / 16;
+    fileNameTreeView.setPrefWidth(screen.getHeight() * x);
+    double y = (double) 5 / 8;
+    fileNameTreeView.setPrefHeight(screen.getWidth() * y);
   }
 }

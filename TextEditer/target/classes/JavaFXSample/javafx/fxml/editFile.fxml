@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="480.0" maxWidth="640.0" minHeight="480.0" minWidth="640.0" prefHeight="480.0" prefWidth="640.0" spacing="20.0" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFXSample.javafx.EditFileController">
+<VBox fx:id="screen" maxHeight="480.0" maxWidth="640.0" minHeight="480.0" minWidth="640.0" onMouseMoved="#resizeScreen" onTouchMoved="#resizeScreen" prefHeight="480.0" prefWidth="640.0" spacing="20.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFXSample.javafx.EditFileController">
     <children>
         <Label fx:id="pathLabel" alignment="TOP_LEFT" prefWidth="640.0" text="ファイルパス表示" textAlignment="CENTER" translateX="-10.0" translateY="-15.0" />
       <HBox prefHeight="30.0" prefWidth="640.0" translateY="-30.0">
@@ -40,7 +40,7 @@
             </Label>
          </children>
       </HBox>
-      <TextArea fx:id="TextArea01" onKeyPressed="#strByteCount" prefHeight="370.0" prefWidth="600.0" translateY="-45.0" />
+      <TextArea fx:id="textArea01" onKeyPressed="#strByteCount" prefHeight="370.0" prefWidth="600.0" translateY="-45.0" />
       <Button mnemonicParsing="false" onAction="#switchToSecondary" translateX="570.0" translateY="10.0">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">

@@ -13,6 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import pathControler.GetPath;
 
@@ -26,12 +27,20 @@ public class EditFileController {
   // 改行
   private static final String NEW_LINE = "\r\n";
 
+  /**
+   * プロジェクト画面
+   * @version 2021/01/05 1.0.0 新規作成
+   * @since 1.0.0
+   * @author wadamasaya
+   */
+  @FXML
+  private VBox screen;
   @FXML
   private Label pathLabel;
   @FXML
   private Label strQuantityLabel;
   @FXML
-  private TextArea TextArea01;
+  private TextArea textArea01;
 
   /**
    * TOP画面表示処理
@@ -141,7 +150,7 @@ public class EditFileController {
     String contectValue = textLoader(targetProperties[0]);
 
     // テキストエリアに読込んだ内容を設定
-    TextArea01.setText(contectValue);
+    textArea01.setText(contectValue);
     pathLabel.setText(targetProperties[1]);
   }
 
@@ -155,7 +164,7 @@ public class EditFileController {
   @FXML
   private void fileSaveStart() throws IOException {
     // テキストエリアから値を取得
-    String inputData = TextArea01.getText();
+    String inputData = textArea01.getText();
 
     // lineを改行で分割し、配列リストdataに追加
     String[] data = inputData.split("\n");
@@ -175,7 +184,7 @@ public class EditFileController {
    */
   private void tmpfileSave() throws IOException {
     // テキストエリアから値を取得
-    String inputData = TextArea01.getText();
+    String inputData = textArea01.getText();
 
     // lineを改行で分割し、配列リストdataに追加
     String[] data = inputData.split("\n");
@@ -193,7 +202,7 @@ public class EditFileController {
   @FXML
   private void strByteCount() throws IOException {
     // テキストエリアから値を取得
-    String inputData = TextArea01.getText();
+    String inputData = textArea01.getText();
 
     // 入力文字数を取得
     int strQuantity = ByteCounter.getByte(inputData, "Shift_JIS");
@@ -212,5 +221,20 @@ public class EditFileController {
 
     // 現在の内容を一時ファイルに保持
     tmpfileSave();
+  }
+
+  /**
+   * TreeViewの大きさをリサイズする
+   * @throws IOException
+   * @version 2021/01/05 1.0.0 新規作成
+   * @since 1.0.0
+   * @author wadamasaya
+   */
+  @FXML
+  private void resizeScreen() throws IOException {
+    double x = (double) 15 / 16;
+    textArea01.setPrefWidth(screen.getHeight() * x);
+    double y = (double) 37 / 48;
+    textArea01.setPrefHeight(screen.getWidth() * y);
   }
 }
